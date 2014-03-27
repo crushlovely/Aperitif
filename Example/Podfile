@@ -1,7 +1,1 @@
 pod "CRLInstallrChecker", :path => "../CRLInstallrChecker.podspec"
-
-target "Demo" do
-end
-
-target "DemoTests" do
-end

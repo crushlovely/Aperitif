@@ -1,0 +1,20 @@
+PODS:
+  - CRLInstallrChecker (0.1.0):
+    - MZFormSheetController (~> 2.3.3)
+  - MZAppearance (1.1.1)
+  - MZFormSheetController (2.3.3):
+    - MZAppearance (~> 1.1.1)
+
+DEPENDENCIES:
+  - CRLInstallrChecker (from `../CRLInstallrChecker.podspec`)
+
+EXTERNAL SOURCES:
+  CRLInstallrChecker:
+    :path: ../CRLInstallrChecker.podspec
+
+SPEC CHECKSUMS:
+  CRLInstallrChecker: e92064526e100466459598a0ccfbdf7e9e3bce5c
+  MZAppearance: 8b02683f0019f725557ae9839ed6cab153fff669
+  MZFormSheetController: 9630bc61ff30ac48c87930fbe350490e484a6496
+
+COCOAPODS: 0.29.0
