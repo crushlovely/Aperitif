@@ -15,7 +15,9 @@ It requires very little work to integrate, and it comes with a [swanky UI](#scre
 Aperitif provides a very simple API to check for updates. The recommended integration is something like this in your app delegate:
 
 ```objective-c
-\#import <Aperitif/CRLAperitif.h>
+#import <Aperitif/CRLAperitif.h>
+
+...
 
 -(void)applicationDidBecomeActive:(UIApplication *)application
 {
