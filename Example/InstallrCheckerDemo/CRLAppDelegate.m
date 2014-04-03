@@ -23,7 +23,7 @@
      
      The 3 second delay is intended to make let the application get through its own
      initialization before running the update check. Adjust the delay as needed, or
-     perhaps move the code elsewhere. -checkNow is the no-dlay version of -checkAfterDelay.
+     perhaps move the code elsewhere. -checkNow is the no-delay version of -checkAfterDelay.
      
      Make sure to only run this code in ad hoc builds. The easiest way to do that is
      probably to define a preprocessor variable in that configuration.
