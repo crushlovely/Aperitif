@@ -7,40 +7,40 @@
 //
 
 #import "CRLAppDelegate.h"
+#import <Aperitif/CRLAperitif.h>
 
 @implementation CRLAppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-    // Override point for customization after application launch.
-    return YES;
-}
-							
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-}
-
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
+    /*
+     This is the recommended point to run the update check. This method is called both on
+     fresh launch of the app, and after resuming from the background.
+     
+     Aperitif automatically checks if the application state is active (i.e., that we're
+     not being woken up for background processing). It also limits checks to one every
+     10 minutes.
+     
+     The 3 second delay is intended to make let the application get through its own
+     initialization before running the update check. Adjust the delay as needed, or
+     perhaps move the code elsewhere. -checkNow is the no-dlay version of -checkAfterDelay.
+     
+     Make sure to only run this code in ad hoc builds. The easiest way to do that is
+     probably to define a preprocessor variable in that configuration.
+     
+     See the guide here for one way to do that:
+     https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/XcodeTricks#details
+     */
 
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    #if CONFIGURATION_ADHOC
+    [CRLAperitif sharedInstance].appToken = @"<Your App Token Here>";
+    [[CRLAperitif sharedInstance] checkAfterDelay:3.0];
+    #endif
+
+    #ifdef DEBUG
+    // To see what an end-user would see, you can call this method:
+    [[CRLAperitif sharedInstance] presentModalForTesting];
+    #endif
 }
 
 @end

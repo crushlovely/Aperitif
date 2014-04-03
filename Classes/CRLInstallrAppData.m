@@ -26,16 +26,16 @@ static NSString * const CRLInstallrAppStatusUrlFormat = @"https://www.installrap
 
 @implementation CRLInstallrAppData
 
-+(void)fetchDataForNewestBuildWithAppKey:(NSString *)key completion:(void (^)(CRLInstallrAppData *))completionHandler
++(void)fetchDataForNewestBuildWithAppToken:(NSString *)token completion:(void (^)(CRLInstallrAppData *))completionHandler
 {
-    NSURL *statusUrl = [NSURL URLWithString:[NSString stringWithFormat:CRLInstallrAppStatusUrlFormat, key]];
+    NSURL *statusUrl = [NSURL URLWithString:[NSString stringWithFormat:CRLInstallrAppStatusUrlFormat, token]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:statusUrl];
     request.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
     request.HTTPShouldHandleCookies = NO;
 
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         if(!data) {
-            NSLog(@"[CRLInstallrUpdateChecker] Error communicating with the Installr API: %@", connectionError);
+            NSLog(@"[Aperitif] Error communicating with the Installr API: %@", connectionError);
             if(completionHandler) completionHandler(nil);
             return;
         }
@@ -43,20 +43,20 @@ static NSString * const CRLInstallrAppStatusUrlFormat = @"https://www.installrap
         NSError *jsonError;
         NSDictionary *body = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
         if(!body) {
-            NSLog(@"[CRLInstallrUpdateChecker] Installr API returned invalid JSON: %@", jsonError);
+            NSLog(@"[Aperitif] Installr API returned invalid JSON: %@", jsonError);
             if(completionHandler) completionHandler(nil);
             return;
         }
 
         if(![body isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"[CRLInstallrUpdateChecker] Installr API returned unexpected JSON: root element is not a dictionary");
+            NSLog(@"[Aperitif] Installr API returned unexpected JSON: root element is not a dictionary");
             if(completionHandler) completionHandler(nil);
             return;
         }
 
         NSDictionary *appDataDict = body[@"appData"];
         if(!appDataDict || ![appDataDict isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"[CRLInstallrUpdateChecker] Installr API returned unexpected JSON: 'appDict' property is missing or not a dictionary");
+            NSLog(@"[Aperitif] Installr API returned unexpected JSON: 'appDict' property is missing or not a dictionary");
             if(completionHandler) completionHandler(nil);
             return;
         }
@@ -65,7 +65,7 @@ static NSString * const CRLInstallrAppStatusUrlFormat = @"https://www.installrap
 
         NSString *currentBundleId = [[NSBundle mainBundle] bundleIdentifier];
         if(![appData.bundleIdentifier isEqualToString:currentBundleId]) {
-            NSLog(@"[CRLInstallrUpdateChecker] Warning! Installr API returned information for an app with bundle id '%@', but the current app is '%@'. Did you use the wrong app key?", appData.bundleIdentifier, currentBundleId);
+            NSLog(@"[Aperitif] Warning! Installr API returned information for an app with bundle id '%@', but the current app is '%@'. Did you use the wrong app key?", appData.bundleIdentifier, currentBundleId);
         }
 
         if(completionHandler) completionHandler(appData);

@@ -7,7 +7,6 @@
 //
 
 #import "CRLViewController.h"
-#import <Aperitif/CRLAperitif.h>
 
 @interface CRLViewController ()
 
@@ -15,21 +14,5 @@
 
 
 @implementation CRLViewController
-
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-
-    // Insert your Installr app key below
-    /*
-    [CRLAperitif sharedInstance].appKey = @"...";
-    [[CRLAperitif sharedInstance] checkNow];
-     */
-}
-
--(UIStatusBarStyle)preferredStatusBarStyle
-{
-    return UIStatusBarStyleLightContent;
-}
 
 @end

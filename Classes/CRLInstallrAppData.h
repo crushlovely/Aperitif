@@ -10,7 +10,7 @@
 
 @interface CRLInstallrAppData : NSObject
 
-+(void)fetchDataForNewestBuildWithAppKey:(NSString *)key completion:(void (^)(CRLInstallrAppData *appData))completionHandler;
++(void)fetchDataForNewestBuildWithAppToken:(NSString *)token completion:(void (^)(CRLInstallrAppData *appData))completionHandler;
 
 -(instancetype)initWithDictionary:(NSDictionary *)dictionary;
 

@@ -11,12 +11,18 @@
 #import "CRLAperitifViewController.h"
 #import <MZFormSheetController/MZFormSheetController.h>
 
-static NSString * const CRLMostRecentHandledVersionDefaultsKey = @"_CRLInstallrMostRecentHandledVersion";
+static NSString * const CRLMostRecentHandledVersionDefaultsKey = @"_CRLAperitifMostRecentHandledVersion";
+static NSString * const CRLLastCheckDateDefaultKey = @"_CRLAperitifLastCheckDate";
+static const NSUInteger CRLMinimumMinutesBetweenChecks = 10;
 
 
 @interface CRLAperitif () <CRLAperitifViewControllerDelegate>
 
 @property (nonatomic, strong) MZFormSheetController *formController;
+@property (nonatomic, assign, getter=isCheckingOrDisplayingModal) BOOL checkingOrDisplayingModal;
+
+@property (nonatomic, readonly) NSUInteger minutesSinceLastCheck;
+@property (nonatomic, strong) NSDate *lastCheckDate;
 
 @end
 
@@ -36,22 +42,82 @@ static NSString * const CRLMostRecentHandledVersionDefaultsKey = @"_CRLInstallrM
 
 -(void)checkNow
 {
-/*    __weak CRLAperitif *weakSelf = self;
-    [CRLInstallrAppData fetchDataForNewestBuildWithAppKey:self.appKey completion:^(CRLInstallrAppData *appData) {
-        if(!appData) return;
+    // In case we're called from an app delegate method during some background processing...
+    if([UIApplication sharedApplication].applicationState != UIApplicationStateActive)
+        return;
 
+    if(self.appToken.length == 0) {
+        NSLog(@"[Aperitif] You must set your Installr app token before checking for updates");
+        return;
+    }
+
+    if(self.isCheckingOrDisplayingModal) {
+        NSLog(@"[Aperitif] Was asked to check for an update, but a check or update prompt is currently in progress. Ignoring.");
+        return;
+    }
+
+    if(self.minutesSinceLastCheck < CRLMinimumMinutesBetweenChecks) {
+        NSLog(@"[Aperitif] Was asked to check for an update, but it's only been %lu minutes since the last check (min. is %lu). Ignoring.", (unsigned long)self.minutesSinceLastCheck, (unsigned long)CRLMinimumMinutesBetweenChecks);
+        return;
+    }
+
+    self.checkingOrDisplayingModal = YES;
+
+    __weak CRLAperitif *weakSelf = self;
+    [CRLInstallrAppData fetchDataForNewestBuildWithAppToken:self.appToken completion:^(CRLInstallrAppData *appData) {
         CRLAperitif *strongSelf = weakSelf;
 
+        // nil appdata means an error must have occurred.
+        if(!appData) {
+            strongSelf.checkingOrDisplayingModal = NO;
+            return;
+        }
+
+        // If the check gave us back some data, record the time, even if it's not new
+        self.lastCheckDate = [NSDate date];
+
+
         if([strongSelf appDataIsForANewVersion:appData]) {
-            NSLog(@"[CRLInstallrUpdateChecker] Found a new version on the server! %@ (build %@), released %@.", appData.versionNumber, appData.buildNumber, appData.dateCreated);
+            NSLog(@"[Aperitif] Found a new version on the server! %@ (build %@), released %@.", appData.versionNumber, appData.buildNumber, appData.dateCreated);
             [strongSelf presentUpdateModalForAppData:appData];
         }
         else {
+            self.checkingOrDisplayingModal = NO;
             [strongSelf markAppDataAsHandled:appData];
         }
-    }];*/
+    }];
+}
 
-    [self presentUpdateModalForAppData:nil];
+#ifdef DEBUG
+-(void)presentModalForTesting
+{
+    __weak CRLAperitif *weakSelf = self;
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        CRLAperitif *strongSelf = weakSelf;
+
+        CRLInstallrAppData *fakeData = [[CRLInstallrAppData alloc] initWithDictionary:@{
+            @"installUrl": @"https://installrapp.com",
+            @"title": @"Testing Aperitif",
+            @"releaseNotes": @"Your release notes would live here:\n\n* Fixed some bugs\n* Danced in the moonlight\n* Updated the backend widget combobulator\n* M. R. Ducks\n\nEtc. etc. etc. You know the drill. Clients love prose.",
+            @"versionNumber": @"9.2.5",
+            @"buildNumber": @"23",
+            @"dateCreated": @"2014-04-01T12:42:13Z"
+        }];
+        [strongSelf presentUpdateModalForAppData:fakeData];
+    }];
+}
+#endif
+
+-(void)checkAfterDelay:(NSTimeInterval)delay
+{
+    dispatch_queue_t lowPriorityQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0);
+    dispatch_time_t delta = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC));
+
+    __weak CRLAperitif *weakSelf = self;
+    dispatch_after(delta, lowPriorityQueue, ^{
+        CRLAperitif *strongSelf = weakSelf;
+        [strongSelf checkNow];
+    });
 }
 
 
@@ -186,17 +252,36 @@ static NSString * const CRLMostRecentHandledVersionDefaultsKey = @"_CRLInstallrM
     return comparison == NSOrderedAscending;
 }
 
+-(NSDate *)lastCheckDate
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:CRLLastCheckDateDefaultKey];
+}
+
+-(void)setLastCheckDate:(NSDate *)lastCheckDate
+{
+    [[NSUserDefaults standardUserDefaults] setObject:lastCheckDate forKey:CRLLastCheckDateDefaultKey];
+}
+
+-(NSUInteger)minutesSinceLastCheck
+{
+    NSDate *lastCheck = self.lastCheckDate;
+    if(!lastCheck) return NSUIntegerMax;
+    return (NSUInteger)ceil(fabs([lastCheck timeIntervalSinceNow]) / 60.0);
+}
 
 #pragma mark CRLInstallerUpdateViewControllerDelegate
 
 -(void)cancelTappedInAperitifViewController:(CRLAperitifViewController *)viewController
 {
+    self.checkingOrDisplayingModal = NO;
     [viewController.formSheetController dismissAnimated:YES completionHandler:nil];
     [self markAppDataAsHandled:viewController.appData];
 }
 
 -(void)updateTappedInAperitifViewController:(CRLAperitifViewController *)viewController
 {
+    self.checkingOrDisplayingModal = NO;
+
     NSURL *installURL = viewController.appData.installURL;
 
     [viewController.formSheetController dismissAnimated:YES completionHandler:nil];

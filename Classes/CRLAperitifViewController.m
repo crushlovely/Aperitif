@@ -106,62 +106,46 @@
 -(NSString *)timeAgoFromDate:(NSDate *)date
 {
     NSDate *now = [NSDate date];
-    double deltaSeconds = fabs([date timeIntervalSinceDate:now]);
-    double deltaMinutes = deltaSeconds / 60.0f;
+    double dsecs = fabs([date timeIntervalSinceDate:now]);
+    double dmins = dsecs / 60.0;
 
-    int minutes;
+    if(dsecs < (60 * 5)) return @"just now";
 
-    if(deltaSeconds < 120)
+    if(dmins < 60) return @"less than an hour ago";
+
+    if(dmins < 120) return @"about an hour ago";
+
+    if(dmins < (24 * 60))
     {
-        return @"just now";
-    }
-    else if (deltaMinutes < 60)
-    {
-        return [NSString stringWithFormat:@"%d minutes ago", (int)deltaMinutes];
-    }
-    else if (deltaMinutes < 120)
-    {
-        return @"an hour ago";
-    }
-    else if (deltaMinutes < (24 * 60))
-    {
-        minutes = (int)floor(deltaMinutes/60);
+        int minutes = (int)floor(dmins / 60.0);
         return [NSString stringWithFormat:@"%d hours ago", minutes];
     }
-    else if (deltaMinutes < (24 * 60 * 2))
+
+    if(dmins < (24 * 60 * 2)) return @"yesterday";
+
+    if(dmins < (24 * 60 * 7))
     {
-        return @"yesterday";
-    }
-    else if (deltaMinutes < (24 * 60 * 7))
-    {
-        minutes = (int)floor(deltaMinutes/(60 * 24));
-        return [NSString stringWithFormat:@"%d days ago", minutes];
-    }
-    else if (deltaMinutes < (24 * 60 * 14))
-    {
-        return @"last week";
-    }
-    else if (deltaMinutes < (24 * 60 * 31))
-    {
-        minutes = (int)floor(deltaMinutes/(60 * 24 * 7));
-        return [NSString stringWithFormat:@"%d weeks ago", minutes];
-    }
-    else if (deltaMinutes < (24 * 60 * 61))
-    {
-        return @"last month";
-    }
-    else if (deltaMinutes < (24 * 60 * 365.25))
-    {
-        minutes = (int)floor(deltaMinutes/(60 * 24 * 30));
-        return [NSString stringWithFormat:@"%d months ago", minutes];
-    }
-    else if (deltaMinutes < (24 * 60 * 731))
-    {
-        return @"last year";
+        int days = (int)floor(dmins / (60 * 24));
+        return [NSString stringWithFormat:@"%d days ago", days];
     }
 
-    minutes = (int)floor(deltaMinutes/(60 * 24 * 365));
-    return [NSString stringWithFormat:@"%d years ago", minutes];
+    if(dmins < (24 * 60 * 14)) return @"last week";
+
+    if(dmins < (24 * 60 * 31))
+    {
+        int weeks = (int)floor(dmins / (60 * 24 * 7));
+        return [NSString stringWithFormat:@"%d weeks ago", weeks];
+    }
+
+    if(dmins < (24 * 60 * 61)) return @"last month";
+
+    if(dmins < (24 * 60 * 365))
+    {
+        int months = (int)floor(dmins / (60 * 24 * 30));
+        return [NSString stringWithFormat:@"%d months ago", months];
+    }
+    
+    return @"over a year ago";
 }
 
 @end
