@@ -5,7 +5,7 @@
 [![Platform](http://cocoapod-badges.herokuapp.com/p/Aperitif/badge.png)](http://cocoadocs.org/docsets/Aperitif)
 -->
 
-An update checker for the wonderful [Installr](https://installr-app.com).
+An update checker for the wonderful [Installr](https://installrapp.com).
 
 Inform your beta testers that there's a new version of your app to install, and do it all pretty-like. It requires iOS 7, and is available via CocoaPods.
 
