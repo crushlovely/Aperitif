@@ -63,6 +63,8 @@ The [lovely icon](http://thenounproject.com/term/tulip-glass/30573/) above was d
 
 The bubbly flask in the update modal is from [iconmonstr](http://iconmonstr.com/flask-7-icon/).
 
+[MZFormSheetController](https://github.com/m1entus/MZFormSheetController) powers the pretty blurry modal.
+
 [PaintCode](http://www.paintcodeapp.com/) and [Particle Playground](http://www.vigorouscoding.com/mac-apps/particle-playground/) were indispensible in making things super pretty.
 
 And, of course, thanks to [Installr](https://installrapp.com) for their wonderful product and amazing customer service.
