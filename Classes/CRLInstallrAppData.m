@@ -1,6 +1,6 @@
 //
 //  CRLInstallrAppData.m
-//  tgmathtest
+//  Aperitif
 //
 //  Created by Tim Clem on 3/24/14.
 //  Copyright (c) 2014 Crush & Lovely. All rights reserved.
@@ -8,7 +8,7 @@
 
 #import "CRLInstallrAppData.h"
 
-NSString * const CRLInstallrAppStatusUrlFormat = @"https://www.installrapp.com/apps/status/%@.json";
+static NSString * const CRLInstallrAppStatusUrlFormat = @"https://www.installrapp.com/apps/status/%@.json";
 
 
 @interface CRLInstallrAppData ()

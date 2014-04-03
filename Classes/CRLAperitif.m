@@ -1,34 +1,34 @@
 //
 //  CRLInstallrUpdateChecker.m
-//  CRLInstallrChecker
+//  Aperitif
 //
 //  Created by Tim Clem on 3/26/14.
 //  Copyright (c) 2014 Crush & Lovely. All rights reserved.
 //
 
-#import "CRLInstallrChecker.h"
+#import "CRLAperitif.h"
 #import "CRLInstallrAppData.h"
-#import "CRLInstallrUpdateViewController.h"
+#import "CRLAperitifViewController.h"
 #import <MZFormSheetController/MZFormSheetController.h>
 
 static NSString * const CRLMostRecentHandledVersionDefaultsKey = @"_CRLInstallrMostRecentHandledVersion";
 
 
-@interface CRLInstallrChecker () <CRLInstallerUpdateViewControllerDelegate>
+@interface CRLAperitif () <CRLAperitifViewControllerDelegate>
 
 @property (nonatomic, strong) MZFormSheetController *formController;
 
 @end
 
 
-@implementation CRLInstallrChecker
+@implementation CRLAperitif
 
 +(instancetype)sharedInstance
 {
-    static CRLInstallrChecker *staticInstance;
+    static CRLAperitif *staticInstance;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        staticInstance = [[CRLInstallrChecker alloc] init];
+        staticInstance = [[CRLAperitif alloc] init];
     });
 
     return staticInstance;
@@ -36,20 +36,22 @@ static NSString * const CRLMostRecentHandledVersionDefaultsKey = @"_CRLInstallrM
 
 -(void)checkNow
 {
-    __weak typeof(self) weakSelf = self;
+/*    __weak CRLAperitif *weakSelf = self;
     [CRLInstallrAppData fetchDataForNewestBuildWithAppKey:self.appKey completion:^(CRLInstallrAppData *appData) {
         if(!appData) return;
 
-        CRLInstallrChecker *strongSelf = weakSelf;
+        CRLAperitif *strongSelf = weakSelf;
 
-        if([weakSelf appDataIsForANewVersion:appData]) {
+        if([strongSelf appDataIsForANewVersion:appData]) {
             NSLog(@"[CRLInstallrUpdateChecker] Found a new version on the server! %@ (build %@), released %@.", appData.versionNumber, appData.buildNumber, appData.dateCreated);
             [strongSelf presentUpdateModalForAppData:appData];
         }
         else {
             [strongSelf markAppDataAsHandled:appData];
         }
-    }];
+    }];*/
+
+    [self presentUpdateModalForAppData:nil];
 }
 
 
@@ -57,7 +59,7 @@ static NSString * const CRLMostRecentHandledVersionDefaultsKey = @"_CRLInstallrM
 
 -(void)presentUpdateModalForAppData:(CRLInstallrAppData *)appData
 {
-    CRLInstallrUpdateViewController *updateViewController = [[CRLInstallrUpdateViewController alloc] initWithAppData:appData delegate:self];
+    CRLAperitifViewController *updateViewController = [[CRLAperitifViewController alloc] initWithAppData:appData delegate:self];
     MZFormSheetController *formController = [[MZFormSheetController alloc] initWithViewController:updateViewController];
     formController.transitionStyle = MZFormSheetTransitionStyleFade;
     formController.cornerRadius = 0.0;
@@ -86,7 +88,7 @@ static NSString * const CRLMostRecentHandledVersionDefaultsKey = @"_CRLInstallrM
         __weak typeof(self) weakSelf = self;
         __weak typeof(updateViewController) weakVC = updateViewController;
         formController.didTapOnBackgroundViewCompletionHandler = ^(CGPoint location) {
-            [weakSelf cancelTappedInInstallrUpdateViewController:weakVC];
+            [weakSelf cancelTappedInAperitifViewController:weakVC];
         };
     }
 
@@ -187,13 +189,13 @@ static NSString * const CRLMostRecentHandledVersionDefaultsKey = @"_CRLInstallrM
 
 #pragma mark CRLInstallerUpdateViewControllerDelegate
 
--(void)cancelTappedInInstallrUpdateViewController:(CRLInstallrUpdateViewController *)viewController
+-(void)cancelTappedInAperitifViewController:(CRLAperitifViewController *)viewController
 {
     [viewController.formSheetController dismissAnimated:YES completionHandler:nil];
     [self markAppDataAsHandled:viewController.appData];
 }
 
--(void)updateTappedInInstallrUpdateViewController:(CRLInstallrUpdateViewController *)viewController
+-(void)updateTappedInAperitifViewController:(CRLAperitifViewController *)viewController
 {
     NSURL *installURL = viewController.appData.installURL;
 

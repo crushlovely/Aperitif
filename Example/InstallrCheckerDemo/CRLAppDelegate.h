@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <CRLInstallrChecker/CRLInstallrUpdateChecker.h>
 
 @interface CRLAppDelegate : UIResponder <UIApplicationDelegate>
 

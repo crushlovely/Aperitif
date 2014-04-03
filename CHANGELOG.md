@@ -1,4 +1,4 @@
-# CRLInstallrChecker CHANGELOG
+# Aperitif CHANGELOG
 
 ## 0.1.0
 

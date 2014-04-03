@@ -1,16 +1,16 @@
 //
 //  CRLInstallrUpdateViewController.m
-//  CRLInstallrChecker
+//  Aperitif
 //
 //  Created by Tim Clem on 3/26/14.
 //  Copyright (c) 2014 Crush & Lovely. All rights reserved.
 //
 
-#import "CRLInstallrUpdateViewController.h"
+#import "CRLAperitifViewController.h"
 #import "CRLInstallrAppData.h"
 
 
-@interface CRLInstallrUpdateViewController ()
+@interface CRLAperitifViewController ()
 
 @property (nonatomic, weak) IBOutlet UITextView *releaseNotes;
 
@@ -18,14 +18,14 @@
 @property (nonatomic, weak) IBOutlet UILabel *updateVersionLabel;
 
 @property (nonatomic, strong, readwrite) CRLInstallrAppData *appData;
-@property (nonatomic, weak) id<CRLInstallerUpdateViewControllerDelegate> delegate;
+@property (nonatomic, weak) id<CRLAperitifViewControllerDelegate> delegate;
 
 @end
 
 
-@implementation CRLInstallrUpdateViewController
+@implementation CRLAperitifViewController
 
--(id)initWithAppData:(CRLInstallrAppData *)appData delegate:(id<CRLInstallerUpdateViewControllerDelegate>)delegate
+-(id)initWithAppData:(CRLInstallrAppData *)appData delegate:(id<CRLAperitifViewControllerDelegate>)delegate
 {
     self = [super initWithNibName:nil bundle:nil];
     if(self) {
@@ -87,17 +87,17 @@
 
 -(IBAction)backgroundButtonTapped:(id)sender
 {
-    [self.delegate cancelTappedInInstallrUpdateViewController:self];
+    [self.delegate cancelTappedInAperitifViewController:self];
 }
 
 -(IBAction)cancelButtonTapped:(id)sender
 {
-    [self.delegate cancelTappedInInstallrUpdateViewController:self];
+    [self.delegate cancelTappedInAperitifViewController:self];
 }
 
 -(IBAction)updateButtonTapped:(id)sender
 {
-    [self.delegate updateTappedInInstallrUpdateViewController:self];
+    [self.delegate updateTappedInAperitifViewController:self];
 }
 
 

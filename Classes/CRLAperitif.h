@@ -1,6 +1,6 @@
 //
-//  CRLInstallrChecker.h
-//  CRLInstallrChecker
+//  CRLAperitif.h
+//  Aperitif
 //
 //  Created by Tim Clem on 3/26/14.
 //  Copyright (c) 2014 Crush & Lovely. All rights reserved.
@@ -11,7 +11,7 @@
 @class CRLInstallrAppData;
 
 
-@interface CRLInstallrChecker : NSObject
+@interface CRLAperitif : NSObject
 
 @property (nonatomic, copy) NSString *appKey;
 

@@ -7,7 +7,7 @@
 //
 
 #import "CRLViewController.h"
-#import <CRLInstallrChecker/CRLInstallrChecker.h>
+#import <Aperitif/CRLAperitif.h>
 
 @interface CRLViewController ()
 
@@ -22,8 +22,8 @@
 
     // Insert your Installr app key below
     /*
-    [CRLInstallrChecker sharedInstance].appKey = @"...";
-    [[CRLInstallrChecker sharedInstance] checkNow];
+    [CRLAperitif sharedInstance].appKey = @"...";
+    [[CRLAperitif sharedInstance] checkNow];
      */
 }
 
