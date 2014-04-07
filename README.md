@@ -1,4 +1,4 @@
-# ![icon](tulip-glass.png) Aperitif
+# ![icon](tulip-glass.png) Aperitif [![Build Status](https://travis-ci.org/crushlovely/Aperitif.svg?branch=master)](https://travis-ci.org/crushlovely/Aperitif)
 
 <!--
 [![Version](http://cocoapod-badges.herokuapp.com/v/Aperitif/badge.png)](http://cocoadocs.org/docsets/Aperitif)
