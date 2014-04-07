@@ -6,7 +6,7 @@ env:
 
 before_install:
   - gem install cocoapods --no-ri --no-rdoc
-  - cd Example; pod install
+  - cd Example
 
 script:
-  - xctool -workspace Example/InstallrCheckerDemo.xcworkspace -scheme InstallrCheckerDemo -sdk iphonesimulator build ARCHS=i386 VALID_ARCHS=i386 ONLY_ACTIVE_ARCH=NO
+  - xctool -workspace InstallrCheckerDemo.xcworkspace -scheme InstallrCheckerDemo -sdk iphonesimulator build ARCHS=i386 VALID_ARCHS=i386 ONLY_ACTIVE_ARCH=NO
