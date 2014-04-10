@@ -1,14 +1,15 @@
-//
-//  CRLInstallrAppData.m
-//  Aperitif
-//
-//  Created by Tim Clem on 3/24/14.
-//  Copyright (c) 2014 Crush & Lovely. All rights reserved.
-//
+// Aperitif
+// Copyright (c) 2014, Crush & Lovely <engineering@crushlovely.com>
+// Under the MIT License; see LICENSE file for details.
 
 #import "CRLInstallrAppData.h"
 
 static NSString * const CRLInstallrAppStatusUrlFormat = @"https://www.installrapp.com/apps/status/%@.json";
+
+NS_INLINE id CRLNilIfNull(id obj) {
+    if(obj == [NSNull null]) return nil;
+    return obj;
+}
 
 
 @interface CRLInstallrAppData ()
@@ -63,9 +64,10 @@ static NSString * const CRLInstallrAppStatusUrlFormat = @"https://www.installrap
 
         CRLInstallrAppData *appData = [[CRLInstallrAppData alloc] initWithDictionary:appDataDict];
 
-        NSString *currentBundleId = [[NSBundle mainBundle] bundleIdentifier];
-        if(![appData.bundleIdentifier isEqualToString:currentBundleId]) {
-            NSLog(@"[Aperitif] Warning! Installr API returned information for an app with bundle id '%@', but the current app is '%@'. Did you use the wrong app key?", appData.bundleIdentifier, currentBundleId);
+        if(appData) {
+            NSString *currentBundleId = [NSBundle mainBundle].bundleIdentifier;
+            if(![appData.bundleIdentifier isEqualToString:currentBundleId])
+                NSLog(@"[Aperitif] Warning! Installr API returned information for an app with bundle id '%@', but the current app is '%@'. Did you use the wrong app key?", appData.bundleIdentifier, currentBundleId);
         }
 
         if(completionHandler) completionHandler(appData);
@@ -77,15 +79,14 @@ static NSString * const CRLInstallrAppStatusUrlFormat = @"https://www.installrap
     self = [super init];
     if(!self) return nil;
 
-    _bundleIdentifier = dictionary[@"appId"];
-    _installURL = [NSURL URLWithString:dictionary[@"installUrl"]];
-    _title = dictionary[@"title"];
-    _releaseNotes = dictionary[@"releaseNotes"];
-    _versionNumber = dictionary[@"versionNumber"];
-    _buildNumber = dictionary[@"buildNumber"];
-    if(_buildNumber == (id)[NSNull null]) _buildNumber = @"";
+    _bundleIdentifier = CRLNilIfNull(dictionary[@"appId"]);
+    _installURL = [NSURL URLWithString:CRLNilIfNull(dictionary[@"installUrl"])];
+    _title = CRLNilIfNull(dictionary[@"title"]);
+    _releaseNotes = CRLNilIfNull(dictionary[@"releaseNotes"]);
+    _versionNumber = CRLNilIfNull(dictionary[@"versionNumber"]);
+    _buildNumber = CRLNilIfNull(dictionary[@"buildNumber"]);
 
-    NSString *stringDate = dictionary[@"dateCreated"];
+    NSString *stringDate = CRLNilIfNull(dictionary[@"dateCreated"]);
     if(stringDate) {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         dateFormatter.locale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];

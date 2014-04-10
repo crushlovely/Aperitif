@@ -1,10 +1,6 @@
-//
-//  CRLInstallrUpdateViewController.m
-//  Aperitif
-//
-//  Created by Tim Clem on 3/26/14.
-//  Copyright (c) 2014 Crush & Lovely. All rights reserved.
-//
+// Aperitif
+// Copyright (c) 2014, Crush & Lovely <engineering@crushlovely.com>
+// Under the MIT License; see LICENSE file for details.
 
 #import "CRLAperitifViewController.h"
 #import "CRLInstallrAppData.h"
@@ -51,10 +47,10 @@
     self.currentVersionLabel.text = [NSString stringWithFormat:self.currentVersionLabel.text, versionNumber, buildNumber];
 
     NSString *buildDescription = @"";
-    if(self.appData.buildNumber && self.appData.buildNumber.length > 0)
+    if(self.appData.buildNumber.length > 0)
         buildDescription = [NSString stringWithFormat:@" (build %@)", self.appData.buildNumber];
 
-    self.updateVersionLabel.text = [NSString stringWithFormat:self.updateVersionLabel.text, self.appData.versionNumber, buildDescription,[self timeAgoFromDate:self.appData.dateCreated]];
+    self.updateVersionLabel.text = [NSString stringWithFormat:self.updateVersionLabel.text, self.appData.versionNumber, buildDescription, [self timeAgoFromDate:self.appData.dateCreated]];
 
     self.releaseNotes.textContainerInset = UIEdgeInsetsZero;
 }
@@ -117,8 +113,8 @@
 
     if(dmins < (24 * 60))
     {
-        int minutes = (int)floor(dmins / 60.0);
-        return [NSString stringWithFormat:@"%d hours ago", minutes];
+        int hours = (int)floor(dmins / 60.0);
+        return [NSString stringWithFormat:@"%d hours ago", hours];
     }
 
     if(dmins < (24 * 60 * 2)) return @"yesterday";

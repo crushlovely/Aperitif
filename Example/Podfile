@@ -1,1 +1,7 @@
 pod "Aperitif", :path => "../Aperitif.podspec"
+
+target 'InstallrCheckerDemoTests', :exclusive => true do
+    pod 'Specta'
+    pod 'Expecta'
+    #pod 'OCMockito'
+end

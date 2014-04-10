@@ -1,10 +1,6 @@
-//
-//  CRLFlaskView.m
-//  Aperitif
-//
-//  Created by Tim Clem on 3/24/14.
-//  Copyright (c) 2014 Crush & Lovely. All rights reserved.
-//
+// Aperitif
+// Copyright (c) 2014, Crush & Lovely <engineering@crushlovely.com>
+// Under the MIT License; see LICENSE file for details.
 
 #import "CRLFlaskView.h"
 
@@ -54,6 +50,8 @@
 
 -(void)createDot
 {
+    // Circle for the emitter cell. We make it slightly off-center, so that the
+    // spin on the particle makes it wobble a bit.
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(80.0, 80.0), NO, 0.0);
     UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0.0, 0.0, 77.0, 77.0)];
     [[UIColor whiteColor] setFill];
@@ -64,6 +62,8 @@
 
 -(void)drawRect:(CGRect)rect
 {
+    // This is exported from PaintCode, with minor edits.
+
     CGFloat dimension = MIN(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
 
     //// Bezier Drawing
@@ -97,6 +97,8 @@
 {
     [self createDot];
 
+    // Exported from ParticlePlayground, with minor edits.
+
     CAEmitterLayer *emitterLayer = (CAEmitterLayer *)self.layer;
     emitterLayer.name = @"emitterLayer";
     CGPoint emitterPosition = CGPointMake(CGRectGetWidth(self.frame) / 2.0, CGRectGetHeight(self.frame) / 3.2);
@@ -113,13 +115,9 @@
 
     emitterLayer.seed = 4176518701;
 
-
-
-
     // Create the emitter Cell
     CAEmitterCell *emitterCell = [CAEmitterCell emitterCell];
 
-    emitterCell.name = @"untitled";
     emitterCell.enabled = YES;
 
     emitterCell.contents = (id)self.dot.CGImage;
@@ -153,15 +151,12 @@
     emitterCell.yAcceleration = -30.00;
     emitterCell.zAcceleration = 0.00;
 
-    // these values are in radians, in the UI they are in degrees
     emitterCell.spin = 6.109;
     emitterCell.spinRange = 11.397;
     emitterCell.emissionLatitude = 2.915;
     emitterCell.emissionLongitude = 2.775;
     emitterCell.emissionRange = 3.489;
-    
-    
-    
+
     emitterLayer.emitterCells = @[emitterCell];
 }
 
