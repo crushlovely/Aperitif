@@ -1,10 +1,6 @@
-//
-//  CRLAperitif.h
-//  Aperitif
-//
-//  Created by Tim Clem on 3/26/14.
-//  Copyright (c) 2014 Crush & Lovely. All rights reserved.
-//
+// Aperitif
+// Copyright (c) 2014, Crush & Lovely <engineering@crushlovely.com>
+// Under the MIT License; see LICENSE file for details.
 
 #import <Foundation/Foundation.h>
 

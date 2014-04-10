@@ -1,14 +1,11 @@
-//
-//  CRLInstallrUpdateChecker.m
-//  Aperitif
-//
-//  Created by Tim Clem on 3/26/14.
-//  Copyright (c) 2014 Crush & Lovely. All rights reserved.
-//
+// Aperitif
+// Copyright (c) 2014, Crush & Lovely <engineering@crushlovely.com>
+// Under the MIT License; see LICENSE file for details.
 
 #import "CRLAperitif.h"
 #import "CRLInstallrAppData.h"
 #import "CRLAperitifViewController.h"
+#import "NSString+CRLVersionComparison.h"
 #import <MZFormSheetController/MZFormSheetController.h>
 
 static NSString * const CRLMostRecentHandledVersionDefaultsKey = @"_CRLAperitifMostRecentHandledVersion";
@@ -20,6 +17,7 @@ static const NSUInteger CRLMinimumMinutesBetweenChecks = 10;
 
 @property (nonatomic, strong) MZFormSheetController *formController;
 @property (nonatomic, assign, getter=isCheckingOrDisplayingModal) BOOL checkingOrDisplayingModal;
+@property (nonatomic, assign) BOOL currentModalIsTesting;
 
 @property (nonatomic, readonly) NSUInteger minutesSinceLastCheck;
 @property (nonatomic, strong) NSDate *lastCheckDate;
@@ -67,15 +65,15 @@ static const NSUInteger CRLMinimumMinutesBetweenChecks = 10;
     [CRLInstallrAppData fetchDataForNewestBuildWithAppToken:self.appToken completion:^(CRLInstallrAppData *appData) {
         CRLAperitif *strongSelf = weakSelf;
 
+        // Record the time of this check, even if it's not new, and even if it's an error;
+        // we don't want to spam the Installr API
+        strongSelf.lastCheckDate = [NSDate date];
+
         // nil appdata means an error must have occurred.
         if(!appData) {
             strongSelf.checkingOrDisplayingModal = NO;
             return;
         }
-
-        // If the check gave us back some data, record the time, even if it's not new
-        self.lastCheckDate = [NSDate date];
-
 
         if([strongSelf appDataIsForANewVersion:appData]) {
             NSLog(@"[Aperitif] Found a new version on the server! %@ (build %@), released %@.", appData.versionNumber, appData.buildNumber, appData.dateCreated);
@@ -103,6 +101,7 @@ static const NSUInteger CRLMinimumMinutesBetweenChecks = 10;
             @"buildNumber": @"23",
             @"dateCreated": @"2014-04-01T12:42:13Z"
         }];
+        strongSelf.currentModalIsTesting = YES;
         [strongSelf presentUpdateModalForAppData:fakeData];
     }];
 }
@@ -191,46 +190,13 @@ static const NSUInteger CRLMinimumMinutesBetweenChecks = 10;
 {
     if(!appData) return;
 
+    if(self.currentModalIsTesting) return;  // Don't record anything when testing the modal
+
     [[NSUserDefaults standardUserDefaults] setObject:@{
        @"versionNumber": appData.versionNumber,
        @"buildNumber": appData.buildNumber,
        @"dateCreated": appData.dateCreated
     } forKey:CRLMostRecentHandledVersionDefaultsKey];
-}
-
--(NSComparisonResult)compareVersion:(NSString *)versionA toVersion:(NSString *)versionB
-{
-    NSArray *componentsA = [versionA componentsSeparatedByString:@"."];
-    NSArray *componentsB = [versionB componentsSeparatedByString:@"."];
-
-    // If the two versions have a different number of components, pad the smaller one with
-    // zeros until they're of equal length.
-    if(componentsA.count != componentsB.count) {
-        NSMutableArray *padding = [NSMutableArray array];
-        NSUInteger diff = labs(componentsA.count - componentsB.count);
-        for(NSUInteger i = 0; i < diff; i++) [padding addObject:@"0"];
-
-        if(componentsA.count < componentsB.count) componentsA = [componentsA arrayByAddingObjectsFromArray:padding];
-        else componentsB = [componentsB arrayByAddingObjectsFromArray:padding];
-    }
-
-    // Now, walk the components in pairs
-    for(NSUInteger i = 0; i < componentsA.count; i++) {
-        NSString *componentA = componentsA[i];
-        NSString *componentB = componentsB[i];
-
-        // If the strings are literally equal, move on to the next component.
-        // No need for the number conversion.
-        if([componentA isEqualToString:componentB]) continue;
-
-        NSInteger numA = [componentA integerValue];
-        NSInteger numB = [componentB integerValue];
-
-        if(numA > numB) return NSOrderedDescending;
-        else if(numA < numB) return NSOrderedAscending;
-    }
-
-    return NSOrderedSame;
 }
 
 -(BOOL)appDataIsForANewVersion:(CRLInstallrAppData *)appData
@@ -241,13 +207,13 @@ static const NSUInteger CRLMinimumMinutesBetweenChecks = 10;
     NSString *versionNumber = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
 
     // Compare version first
-    NSComparisonResult comparison = [self compareVersion:versionNumber toVersion:appData.versionNumber];
+    NSComparisonResult comparison = [versionNumber crl_dottedVersionCompare:appData.versionNumber];
     if(comparison == NSOrderedAscending) return YES;
     if(comparison == NSOrderedDescending) return NO;
 
     // If the major versions are equal, check the build number
     if(appData.buildNumber && appData.buildNumber.length > 0)
-        comparison = [self compareVersion:buildNumber toVersion:appData.buildNumber];
+        comparison = [buildNumber crl_dottedVersionCompare:appData.buildNumber];
     
     return comparison == NSOrderedAscending;
 }
@@ -276,6 +242,7 @@ static const NSUInteger CRLMinimumMinutesBetweenChecks = 10;
     self.checkingOrDisplayingModal = NO;
     [viewController.formSheetController dismissAnimated:YES completionHandler:nil];
     [self markAppDataAsHandled:viewController.appData];
+    self.currentModalIsTesting = NO;
 }
 
 -(void)updateTappedInAperitifViewController:(CRLAperitifViewController *)viewController
@@ -286,6 +253,7 @@ static const NSUInteger CRLMinimumMinutesBetweenChecks = 10;
 
     [viewController.formSheetController dismissAnimated:YES completionHandler:nil];
     [self markAppDataAsHandled:viewController.appData];
+    self.currentModalIsTesting = YES;
 
     [[UIApplication sharedApplication] openURL:installURL];
 }

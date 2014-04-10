@@ -20,9 +20,10 @@
 		BD0C8F4518E493A3005B537A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD0C8F2418E493A3005B537A /* Foundation.framework */; };
 		BD0C8F4618E493A3005B537A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD0C8F2818E493A3005B537A /* UIKit.framework */; };
 		BD0C8F4E18E493A3005B537A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BD0C8F4C18E493A3005B537A /* InfoPlist.strings */; };
-		BD0C8F5018E493A3005B537A /* InstallrCheckerDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BD0C8F4F18E493A3005B537A /* InstallrCheckerDemoTests.m */; };
 		BD0C8F7318E49BCB005B537A /* Main-iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD0C8F6F18E49BCB005B537A /* Main-iPad.storyboard */; };
 		BD0C8F7418E49BCB005B537A /* Main-iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD0C8F7118E49BCB005B537A /* Main-iPhone.storyboard */; };
+		BD62466A18F6E76800F95221 /* NSString+CRLVersionComparisonSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BD62466918F6E76800F95221 /* NSString+CRLVersionComparisonSpec.m */; };
+		EF40085947544165AA9114DF /* libPods-InstallrCheckerDemoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F910425630204D8B98E8A5C0 /* libPods-InstallrCheckerDemoTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,9 +56,11 @@
 		BD0C8F4318E493A3005B537A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		BD0C8F4B18E493A3005B537A /* InstallrCheckerDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "InstallrCheckerDemoTests-Info.plist"; sourceTree = "<group>"; };
 		BD0C8F4D18E493A3005B537A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		BD0C8F4F18E493A3005B537A /* InstallrCheckerDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstallrCheckerDemoTests.m; sourceTree = "<group>"; };
 		BD0C8F7018E49BCB005B537A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Main-iPad.storyboard"; sourceTree = "<group>"; };
 		BD0C8F7218E49BCB005B537A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Main-iPhone.storyboard"; sourceTree = "<group>"; };
+		BD62466918F6E76800F95221 /* NSString+CRLVersionComparisonSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CRLVersionComparisonSpec.m"; sourceTree = "<group>"; };
+		EE013B8EBEE641778682B7B1 /* Pods-InstallrCheckerDemoTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstallrCheckerDemoTests.xcconfig"; path = "Pods/Pods-InstallrCheckerDemoTests.xcconfig"; sourceTree = "<group>"; };
+		F910425630204D8B98E8A5C0 /* libPods-InstallrCheckerDemoTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-InstallrCheckerDemoTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +82,7 @@
 				BD0C8F4418E493A3005B537A /* XCTest.framework in Frameworks */,
 				BD0C8F4618E493A3005B537A /* UIKit.framework in Frameworks */,
 				BD0C8F4518E493A3005B537A /* Foundation.framework in Frameworks */,
+				EF40085947544165AA9114DF /* libPods-InstallrCheckerDemoTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,6 +97,7 @@
 				BD0C8F2318E493A3005B537A /* Frameworks */,
 				BD0C8F2218E493A3005B537A /* Products */,
 				767957F7EE3F430C82985882 /* Pods.xcconfig */,
+				EE013B8EBEE641778682B7B1 /* Pods-InstallrCheckerDemoTests.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -113,6 +118,7 @@
 				BD0C8F2818E493A3005B537A /* UIKit.framework */,
 				BD0C8F4318E493A3005B537A /* XCTest.framework */,
 				8DC4AE12EFBE4A72B98E9BB5 /* libPods.a */,
+				F910425630204D8B98E8A5C0 /* libPods-InstallrCheckerDemoTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -146,7 +152,7 @@
 		BD0C8F4918E493A3005B537A /* InstallrCheckerDemoTests */ = {
 			isa = PBXGroup;
 			children = (
-				BD0C8F4F18E493A3005B537A /* InstallrCheckerDemoTests.m */,
+				BD62466918F6E76800F95221 /* NSString+CRLVersionComparisonSpec.m */,
 				BD0C8F4A18E493A3005B537A /* Supporting Files */,
 			);
 			path = InstallrCheckerDemoTests;
@@ -187,9 +193,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BD0C8F5618E493A3005B537A /* Build configuration list for PBXNativeTarget "InstallrCheckerDemoTests" */;
 			buildPhases = (
+				20FF5C0F51BD4457BD2A752A /* Check Pods Manifest.lock */,
 				BD0C8F3E18E493A3005B537A /* Sources */,
 				BD0C8F3F18E493A3005B537A /* Frameworks */,
 				BD0C8F4018E493A3005B537A /* Resources */,
+				DE37BAEDBDF04E66A7CBFB4D /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -258,6 +266,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		20FF5C0F51BD4457BD2A752A /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		C17E82D972854B06B279187A /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -271,6 +294,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		DE37BAEDBDF04E66A7CBFB4D /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-InstallrCheckerDemoTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F6C8FE9E7C4F487189C80BBB /* Copy Pods Resources */ = {
@@ -305,7 +343,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD0C8F5018E493A3005B537A /* InstallrCheckerDemoTests.m in Sources */,
+				BD62466A18F6E76800F95221 /* NSString+CRLVersionComparisonSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,6 +469,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "InstallrCheckerDemo/InstallrCheckerDemo-Prefix.pch";
 				INFOPLIST_FILE = "InstallrCheckerDemo/InstallrCheckerDemo-Info.plist";
@@ -447,6 +486,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "InstallrCheckerDemo/InstallrCheckerDemo-Prefix.pch";
 				INFOPLIST_FILE = "InstallrCheckerDemo/InstallrCheckerDemo-Info.plist";
@@ -459,6 +499,7 @@
 		};
 		BD0C8F5718E493A3005B537A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EE013B8EBEE641778682B7B1 /* Pods-InstallrCheckerDemoTests.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/InstallrCheckerDemo.app/InstallrCheckerDemo";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -481,6 +522,7 @@
 		};
 		BD0C8F5818E493A3005B537A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EE013B8EBEE641778682B7B1 /* Pods-InstallrCheckerDemoTests.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/InstallrCheckerDemo.app/InstallrCheckerDemo";
 				FRAMEWORK_SEARCH_PATHS = (

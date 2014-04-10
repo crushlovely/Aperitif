@@ -2,8 +2,10 @@
 // Copyright (c) 2014, Crush & Lovely <engineering@crushlovely.com>
 // Under the MIT License; see LICENSE file for details.
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-@interface CRLFlaskView : UIView
+@interface NSString (CRLVersionComparison)
+
+-(NSComparisonResult)crl_dottedVersionCompare:(NSString *)string;
 
 @end
