@@ -34,6 +34,8 @@
 
 -(void)viewDidLoad
 {
+    [super viewDidLoad];
+
     self.releaseNotes.text = self.appData.releaseNotes;
 
     // There's an iOS 7 bug where custom fonts on UITextViews set from NIBs don't work unless you set
