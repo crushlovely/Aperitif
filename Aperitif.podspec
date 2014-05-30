@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.homepage         = 'http://github.com/crushlovely/Aperitif'
   s.license          = 'MIT'
   s.authors          = { 'Crush & Lovely' => 'engineering@crushlovely.com', 'Tim Clem' => 'tim@crushlovely.com' }
-  s.source           = { :git => 'https://github.com/crushlovely/Aperitif.git', :branch => 'master' }
+  s.source           = { :git => 'https://github.com/crushlovely/Aperitif.git', :tag => "v#{s.version}" }
 
   s.platform     = :ios, '7.0'
   s.ios.deployment_target = '7.0'
