@@ -35,9 +35,9 @@ The 3 second delay is intended to make let the application get through its own i
 Make sure to only run this code in ad hoc builds. The easiest way to do that is probably to define a preprocessor variable in that configuration. See the [guide in CocoaLumberjack's wiki](https://github.com/CocoaLumberjack/CocoaLumberjack/wiki/XcodeTricks#details) for one way to do that.
 
 ## Installation
-Aperitif is available through [CocoaPods](http://cocoapods.org), Until an official spec is merged, you can use it by adding the following line to your Podfile:
+Aperitif is available through [CocoaPods](http://cocoapods.org). You can use it by adding the following line to your Podfile:
 
-    pod 'Aperitif', :git => 'https://github.com/crushlovely/Aperitif.git'
+    pod 'Aperitif'
 
 ## Screenshots
 ![iPhone screenshot](screenshot-iphone.png) ![iPad screenshot](screenshot-ipad.png)
