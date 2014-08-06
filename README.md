@@ -1,4 +1,4 @@
-# ![icon](tulip-glass.png) Aperitif [![Build Status](https://travis-ci.org/crushlovely/Aperitif.svg?branch=master)](https://travis-ci.org/crushlovely/Aperitif)
+# ![icon](aperitif-120.png) Aperitif [![Build Status](https://travis-ci.org/crushlovely/Aperitif.svg?branch=master)](https://travis-ci.org/crushlovely/Aperitif)
 
 <!--
 [![Version](http://cocoapod-badges.herokuapp.com/v/Aperitif/badge.png)](http://cocoadocs.org/docsets/Aperitif)
@@ -61,7 +61,7 @@ If the user hits "Maybe Later" on the modal, they are not prompted to install th
 Aperitif is available under the MIT license. See the LICENSE file for more info.
 
 ## Acknowledgements
-The [lovely icon](http://thenounproject.com/term/tulip-glass/30573/) above was designed by Erin Standley from The Noun Project. It is licensed under the Creative Commons Attribution License 3.0.
+The lovely icon was created by [Ray Bruwelheide](http://ray-b.net). It is licensed under the [Creative Commons Attribution 3.0 license](http://creativecommons.org/licenses/by/3.0/us/).
 
 The bubbly flask in the update modal is from [iconmonstr](http://iconmonstr.com/flask-7-icon/).
 
