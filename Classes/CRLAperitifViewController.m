@@ -23,7 +23,7 @@
 
 -(id)initWithAppData:(CRLInstallrAppData *)appData delegate:(id<CRLAperitifViewControllerDelegate>)delegate
 {
-    self = [super initWithNibName:nil bundle:nil];
+    self = [super initWithNibName:nil bundle:[NSBundle bundleForClass:[CRLAperitifViewController class]]];
     if(self) {
         _appData = appData;
         _delegate = delegate;
