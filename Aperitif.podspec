@@ -15,5 +15,5 @@ Pod::Spec.new do |s|
   s.resources = 'Assets/*.xib'
   s.public_header_files = 'Classes/CRLAperitif.h'
 
-  s.dependency 'MZFormSheetController', '~> 2.3.3'
+  s.dependency 'MZFormSheetController', '~> 3.1'
 end
